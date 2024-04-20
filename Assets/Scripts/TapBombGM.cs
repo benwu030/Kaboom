@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 public class TapBombGM : BombGM
 {   
-    public TapBombTime = 10;
+    public int TapBombTime = 10;
     private List<string> WireCuttingOrder;
     private List<int> WireCuttingOrderIndex;
     private HintLightsControll _hintLightsController;
