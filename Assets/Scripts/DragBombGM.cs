@@ -5,8 +5,6 @@ using UnityEngine;
 //for checking wire connection and generating the wires
 public class DragBombGM : BombGM
 {
-    public GameObject LeftWire;
-    public GameObject RightWire;
     private int remainingWires = 5;
     // Start is called before the first frame update
     void Start()

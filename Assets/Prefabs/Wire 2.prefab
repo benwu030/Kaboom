@@ -100,10 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05526aa054b7841418328f7a4b060786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsDraggaing: 0
+  IsDisconnected: 0
   wireEnd: {fileID: 4805859729157150798}
   originalSize: {x: 0, y: 0}
-  Light: {fileID: 9156137401321105479}
+  Light: {fileID: 2600863916017947220}
   originalPosition: {x: 0, y: 0, z: 0}
   LastPosition: {x: 0, y: 0, z: 0}
   PairedWire: {fileID: 0}
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05526aa054b7841418328f7a4b060786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsDraggaing: 0
+  IsDisconnected: 0
   wireEnd: {fileID: 0}
   originalSize: {x: 0, y: 0}
   Light: {fileID: 0}

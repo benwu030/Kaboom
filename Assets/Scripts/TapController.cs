@@ -12,17 +12,15 @@ public class TapController : MonoBehaviour
     private TapWire LeftWire;
     private TapWire RightWire;
     private GameObject DisconnectedWire;
-    private DragBombGM dragBombGM;
+    private TapBombGM tapBombGM;
+    private float DisconnectedWireOffset = 0.4f;
     void Start()
     {
-        // dragBombGM = FindObjectOfType<DragBombGM>();
+        tapBombGM = FindObjectOfType<TapBombGM>();
     }
 
     void Update()
     {   
-
-        // if(Input.touchCount ==1 && Input.GetTouch(0).phase == TouchPhase.Ended)
-        //     return;
 
     if (Input.touchCount ==1 && Input.GetTouch(0).phase == TouchPhase.Ended)
     {
@@ -36,23 +34,26 @@ public class TapController : MonoBehaviour
         if (hit.collider != null)
         {
             TapWire TappedWire = hit.collider.GetComponent<TapWire>();
-            if (TappedWire != null)
+            if (TappedWire != null && TappedWire.PairedWire != null && TappedWire.PairedWire.IsDisconnected == false)
             {
                 LeftWire = TappedWire;
                 RightWire = TappedWire.PairedWire;
-                UpdateLefTRightWirePosistion(_worldPos);
+                UpdateLeftRightWirePosistion(_worldPos);
                 UpdateDisconnectedWire(_worldPos,LeftWire);
                 UpdateDisconnectedWire(_worldPos,RightWire);
-
+                tapBombGM.CheckWireCuttingOrder(LeftWire);
             }
         }
     }
 
     }
-    private void UpdateLefTRightWirePosistion(Vector3 newPosition){
+    private void UpdateLeftRightWirePosistion(Vector3 newPosition){
         
         Debug.Log("updatiing "+newPosition);
+        //deduct the offset from newPosition
+        newPosition.x -= (LeftWire.transform.lossyScale.x * DisconnectedWireOffset);
         UpdatePosistion(newPosition, LeftWire);
+        newPosition.x -= (RightWire.transform.lossyScale.x * DisconnectedWireOffset * 2);
         UpdatePosistion(newPosition, RightWire);
 
 
@@ -64,18 +65,18 @@ public class TapController : MonoBehaviour
 
     }
 
-    private void UpdateDisconnectedWire(Vector3 newPosition,TapWire wire){
-
-
-        if(!wire.DisconnectedWire.activeSelf)
+    private void UpdateDisconnectedWire(Vector3 newPosition, TapWire wire)
+    {
+        if (!wire.IsDisconnected){
+            wire.IsDisconnected = true;
             wire.DisconnectedWire.SetActive(true);
+
+        }
         else return;
 
-        float offset = Vector2.Distance(wire.originalPosition, wire.PairedWire.originalPosition);
-        float dist = Vector2.Distance(wire.originalPosition, newPosition);
-        wire.DisconnectedWire.transform.position =  new Vector2(newPosition.x-5,wire.originalPosition.y);
-
-    }   
+        float dist = (float)(newPosition.x -  wire.transform.lossyScale.x * DisconnectedWireOffset);
+        wire.DisconnectedWire.transform.position = new Vector2(dist, wire.originalPosition.y);
+    }
 
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class TapWire : MonoBehaviour
 {
-    public bool IsDraggaing;
+    public bool IsDisconnected = false;
 
     // private Collider2D _collider;
     public SpriteRenderer wireEnd;

@@ -11,12 +11,11 @@ public abstract class BombGM : MonoBehaviour
 
     public GameObject bombPrefab; // Reference to the bomb prefab
     
-  
     public GameObject explosionPrefab; // Reference to the explosion prefab
     public Transform bombSpawnPoint; // Position to spawn the bomb
     public Camera mainCamera; // Reference to the main camera
     public TextMeshProUGUI timerText; // Reference to the UI text element to display timer
-    private GameObject currentBombInstance; // Reference to the spawned bomb
+    public GameObject currentBombInstance; // Reference to the spawned bomb
     private RectTransform bombImageLocation;
     public int bombTime = 5;
     // Start is called before the first frame update

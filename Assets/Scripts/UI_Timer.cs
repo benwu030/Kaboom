@@ -7,6 +7,7 @@ public class UI_Timer : MonoBehaviour
 {
 
     public static event System.Action TimerEnded = delegate { };
+    public static event System.Action<int> TimerUpdated = delegate { };
     public int totalTime ; // The total time for the timer
     public int currentTime; // Current time left
     public TextMeshProUGUI timerText; // Reference to the UI text element to display timer
@@ -30,6 +31,7 @@ public class UI_Timer : MonoBehaviour
     public void forceUpdateTimer(int updateTime)
     {
         currentTime += updateTime;
+        TimerUpdated(currentTime);
         if (currentTime > 0)
         UpdateTimerDisplay();
         else {
@@ -42,7 +44,7 @@ public class UI_Timer : MonoBehaviour
     void Countdown()
     {
 
-
+        TimerUpdated(currentTime);  
         if (currentTime <= 0)
         {
             TimerEnded();
