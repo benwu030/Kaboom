@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TapController : MonoBehaviour
+public class CutController : MonoBehaviour
 {
 
    private Vector3 touchPosition;
@@ -12,11 +12,11 @@ public class TapController : MonoBehaviour
     private TapWire LeftWire;
     private TapWire RightWire;
     private GameObject DisconnectedWire;
-    private TapBombGM tapBombGM;
+    private CutBombGM cutBombGM;
     private float DisconnectedWireOffset = 0.4f;
     void Start()
     {
-        tapBombGM = FindObjectOfType<TapBombGM>();
+        cutBombGM = FindObjectOfType<CutBombGM>();
     }
 
     void Update()
@@ -25,7 +25,7 @@ public class TapController : MonoBehaviour
     if (Input.touchCount ==1 && Input.GetTouch(0).phase == TouchPhase.Ended)
     {
         touchPosition = Input.GetTouch(0).position;
-        Debug.Log(touchPosition);
+        // Debug.Log(touchPosition);
 
         _screenPos = new Vector2(touchPosition.x, touchPosition.y);
         _worldPos = Camera.main.ScreenToWorldPoint(_screenPos);
@@ -41,7 +41,7 @@ public class TapController : MonoBehaviour
                 UpdateLeftRightWirePosistion(_worldPos);
                 UpdateDisconnectedWire(_worldPos,LeftWire);
                 UpdateDisconnectedWire(_worldPos,RightWire);
-                tapBombGM.CheckWireCuttingOrder(LeftWire);
+                cutBombGM.CheckWireCuttingOrder(LeftWire);
             }
         }
     }

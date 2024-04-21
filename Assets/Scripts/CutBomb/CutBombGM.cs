@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-public class TapBombGM : BombGM
+public class CutBombGM : BombGM
 {   
     public int TapBombTime = 10;
     private List<string> WireCuttingOrder;

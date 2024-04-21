@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//draggable wire
 public class Draggable : MonoBehaviour
 {
     public bool IsDraggaing;
