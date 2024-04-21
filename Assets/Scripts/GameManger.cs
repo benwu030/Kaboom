@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log(numberOfBombs);
 
-        int randomBomb = 4;
+        int randomBomb = 3;
         // int randomBomb = UnityEngine.Random.Range(0, BombGMs.Count);
         Debug.Log(isPreivousBombDefused);
         Debug.Log(remainingTime);
