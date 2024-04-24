@@ -8,8 +8,6 @@ public class VolumeBar : MonoBehaviour
 
     private Slider slider;
     public float increaseSpeed = 0.5f;
-    private float totalVolume = 0.0f;
-
     public int volumeSense = 500;
     // Start is called before the first frame update
     void Start()
