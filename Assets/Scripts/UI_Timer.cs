@@ -6,20 +6,20 @@ using UnityEngine;
 public class UI_Timer : MonoBehaviour
 {
 
-    public static event System.Action TimerEnded = delegate { };
-    public static event System.Action<int> TimerUpdated = delegate { };
     public int totalTime ; // The total time for the timer
     public int currentTime; // Current time left
     public TextMeshProUGUI timerText; // Reference to the UI text element to display timer
-
+    public TimeBar timeBar; // Reference to the time bar
     // Start is called before the first frame update
+    public BombGM bombGM;
+
     void Start()
     {
-        timerText = GetComponent<TextMeshProUGUI>();
-        currentTime = totalTime; // Set the current time to the total time
-        UpdateTimerDisplay();
-        // Start the timer countdown
-        InvokeRepeating("Countdown", 1, 1);
+        // timerText = GetComponent<TextMeshProUGUI>();
+        // currentTime = totalTime; // Set the current time to the total time
+        // timeBar.totalTime = totalTime;
+        
+
     }
 
     // Update is called once per frame
@@ -36,31 +36,59 @@ public class UI_Timer : MonoBehaviour
         UpdateTimerDisplay();
         else {
             currentTime = 0;
+            
             UpdateTimerDisplay();
-            TimerEnded();
-            CancelInvoke("Countdown");
+            
         }
     }
-    void Countdown()
+    public IEnumerator Countdown()
     {
+        GameManager.instance.TimerTickingAudio.Play();
 
-        TimerUpdated(currentTime);  
-        if (currentTime <= 0)
+        while (currentTime >= 0)
+        {
+           
+        yield return new WaitForSeconds(1);
+        if (currentTime == 0)
         {
             TimerEnded();
-            CancelInvoke("Countdown");
-            return;
+            break;
         }
-                
-        currentTime -= 1;
-        UpdateTimerDisplay();
+        else{
+            currentTime -= 1;
+            TimerUpdated(currentTime);  
+            UpdateTimerDisplay();
+        }
+        // Debug.Log("Countdown passed");
+
+        }
     }
 
-    void UpdateTimerDisplay()
+
+    private void TimerEnded()
+    {   
+        // Debug.Log(currentTime);
+        // Handle timer end
+        GameManager.instance.TimerTickingAudio.Stop();
+
+        bombGM.ExplodeBomb("KeyPadBombImage");
+        
+    }
+    void TimerUpdated(int time)
+    {
+        // Handle timer update
+        if(bombGM.gameObject.name == "CutBombGM"){
+            bombGM.GetComponent<CutBombGM>().HandleTimerUpdate();
+        }
+            
+    }
+    public void UpdateTimerDisplay()
     {
         int minutes = Mathf.FloorToInt(currentTime / 60f);
         int seconds = Mathf.FloorToInt(currentTime % 60f);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        timeBar.UpdateTimeBar(totalTime-currentTime);
+        //update TimeBar
     }
 
 

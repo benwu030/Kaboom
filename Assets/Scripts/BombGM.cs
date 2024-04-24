@@ -20,16 +20,20 @@ public abstract class BombGM : MonoBehaviour
     public int bombTime = 5;
     // Start is called before the first frame update
     public UI_Timer  UI_Timer_Controller;
-
+    public Coroutine CountDownCoroutine =null;
     public abstract void StartGame();
     public void SpawnBomb()
     {
 
         currentBombInstance = Instantiate(bombPrefab, bombSpawnPoint.position, Quaternion.identity);
-        UI_Timer_Controller = currentBombInstance.GetComponentInChildren<UI_Timer>();
-        UI_Timer_Controller.totalTime = bombTime;
         // Get the UI_Timer script component from the bomb prefab
-
+        UI_Timer_Controller = currentBombInstance.GetComponentInChildren<UI_Timer>();
+        //set the bomb time and update bomb displaytime
+        UI_Timer_Controller.totalTime = bombTime;
+        UI_Timer_Controller.currentTime = bombTime;
+        UI_Timer_Controller.timeBar.totalTime = bombTime;
+        UI_Timer_Controller.UpdateTimerDisplay();
+        CountDownCoroutine = StartCoroutine(UI_Timer_Controller.Countdown());
     }
 
 
@@ -89,32 +93,39 @@ public abstract class BombGM : MonoBehaviour
     }
     
 
-    public void ExplodeBomb(string tag){
+    public void ExplodeBomb(string tag = "KeyPadBombImage"){
+        GameManager.instance.TimerTickingAudio.Stop();
         Debug.Log("KABOOM");
-
+        //wait until explosionInstance is destroyed
         bombImageLocation = GameObject.FindGameObjectWithTag(tag).GetComponent<RectTransform>();
         Vector3 explosionPos = new Vector3(bombImageLocation.position.x, bombImageLocation.position.y, bombImageLocation.position.z+5);
         GameObject explosionInstance = Instantiate(explosionPrefab, explosionPos, Quaternion.identity);
         ParticleSystem explosion = explosionInstance.GetComponent<ParticleSystem>();
-        Destroy(explosionInstance, explosion.main.duration);
-        explosionInstance = null;
-        Destroy(currentBombInstance);
-        currentBombInstance = null;
+        GameManager.instance.BombExplodedSound.Play();
+        GameObject temp = Instantiate(GameManager.instance.BombKaboomPrefab, GameManager.instance.transform.position, Quaternion.identity);
+        Destroy(temp, explosion.main.duration);
+        Destroy(explosionInstance,explosion.main.duration);
+        UI_Timer_Controller = null;
+        //check if destroy explosionInstance is finished
         //notify the gamemanager move to next bomb
-        gameObject.SetActive(false);//deactivate the bombGM GameObject
+ 
         GameManager.instance.InstantiateNextBomb(false, 0);
+
         
     }
 
-    public void DefuseBomb(string tag = "BombImage"){
+
+    public void DefuseBomb(string tag = "KeyPadBombImage"){
+        GameManager.instance.TimerTickingAudio.Stop();
         Debug.Log("Bomb Defused");
-        Destroy(currentBombInstance);
-        currentBombInstance = null;
-
-        //notify the gamemanager move to next bomb
-        gameObject.SetActive(false);//deactivate the bombGM GameObject
-
+    
+        GameManager.instance.BombDefusedSound.Play();
+        
+        GameObject temp = Instantiate(GameManager.instance.BombDefusedPrefab, GameManager.instance.transform.position, Quaternion.identity);
+        Destroy(temp, 2f);
         GameManager.instance.InstantiateNextBomb(true,UI_Timer_Controller.currentTime);
+        UI_Timer_Controller = null;
+
 
     }
 

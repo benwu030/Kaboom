@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &388750608208415891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2836803109256631979}
+  - component: {fileID: 8451975318135580331}
+  m_Layer: 0
+  m_Name: CutBombGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2836803109256631979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388750608208415891}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.9201894, y: -1.155946, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8451975318135580331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388750608208415891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6155e05561c96349be8cfaed80dc50b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombPrefab: {fileID: 6041528251418818232, guid: 73c70a3390be2404dae73991b69e08b8, type: 3}
+  explosionPrefab: {fileID: 7894508443054300892, guid: 8f33aa72f467d4838982e34f7ae50c1d, type: 3}
+  bombSpawnPoint: {fileID: 2836803109256631979}
+  mainCamera: {fileID: 3587920627114707087, guid: 7efb44c5780d341e5b649f4b9aa3131e, type: 3}
+  timerText: {fileID: 0}
+  currentBombInstance: {fileID: 0}
+  bombTime: 5
+  UI_Timer_Controller: {fileID: 0}
+  TapBombTime: 10
+  _hintLightsController: {fileID: 5484627945791577112, guid: 70daf033822dec041912ff83c2d2f6b6, type: 3}

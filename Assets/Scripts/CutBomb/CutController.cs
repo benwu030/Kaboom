@@ -14,6 +14,7 @@ public class CutController : MonoBehaviour
     private GameObject DisconnectedWire;
     private CutBombGM cutBombGM;
     private float DisconnectedWireOffset = 0.4f;
+    public AudioSource wireCutSound;
     void Start()
     {
         cutBombGM = FindObjectOfType<CutBombGM>();
@@ -38,6 +39,8 @@ public class CutController : MonoBehaviour
             {
                 LeftWire = TappedWire;
                 RightWire = TappedWire.PairedWire;
+                wireCutSound.Play();
+
                 UpdateLeftRightWirePosistion(_worldPos);
                 UpdateDisconnectedWire(_worldPos,LeftWire);
                 UpdateDisconnectedWire(_worldPos,RightWire);
@@ -49,7 +52,7 @@ public class CutController : MonoBehaviour
     }
     private void UpdateLeftRightWirePosistion(Vector3 newPosition){
         
-        Debug.Log("updatiing "+newPosition);
+        // Debug.Log("updatiing "+newPosition);
         //deduct the offset from newPosition
         newPosition.x -= (LeftWire.transform.lossyScale.x * DisconnectedWireOffset);
         UpdatePosistion(newPosition, LeftWire);

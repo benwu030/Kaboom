@@ -7,10 +7,12 @@ public class AudioBombGM : BombGM
     // Start is called before the first frame update
     void Start()
     {
-        UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
+        // UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
     }
+
     override public void StartGame()
     {
+        // UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
         bombTime = 8;
         SpawnBomb();
     }
@@ -20,8 +22,8 @@ public class AudioBombGM : BombGM
         
     }
 
-    void OnDestroy()
-    {
-        UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
-    }
+    // void OnDestroy()
+    // {
+    //     UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
+    // }
 }

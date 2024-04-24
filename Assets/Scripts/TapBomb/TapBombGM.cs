@@ -9,24 +9,23 @@ public class TapBombGM : BombGM
     public int bombType = 0;// 0:tap 1:shake 2:scream
     void Start()
     {
-        UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
+        // UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
     }
+
+
+
 
     override public void StartGame()
     {
+        // UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
         bombType = Random.Range(0, 2);
         bombTime = TapBombTime;
-        SpawnBomb();
+        Invoke("SpawnBomb",0.2f);
     }
 
 
     //reset parameter in onEnable and onDisable
-    void OnEnable()
-    {
-    }
-    void OnDisable  ()
-    {
-    }
+
 
 
     public void Win()
@@ -35,7 +34,7 @@ public class TapBombGM : BombGM
     }
     void OnDestroy()
     {
-        UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
+        // UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
     }
 
 }

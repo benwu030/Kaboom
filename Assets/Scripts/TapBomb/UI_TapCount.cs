@@ -6,10 +6,9 @@ public class UI_TapCount : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private TextMeshProUGUI _TapCountText;
+    public TextMeshProUGUI _TapCountText;
     void Start()
     {
-        _TapCountText = GetComponent<TextMeshProUGUI>();
     }
 
     public void UpdateTapCount(int count)

@@ -11,18 +11,20 @@ public class KeyPadGM : BombGM
 
     private int remainder;
     private int password;
+    private static bool isDefused = false;
     private Coroutine shakeCoroutine;
     void Start()
     {
-       UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
+    //    UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
     }
+
+
+ 
     override public void StartGame()
     {
-        gameObject.SetActive(true);
-
+        isDefused = false;
         GenerateQuestion();//generate questions and set bomb time
         SpawnBomb();
-        UI_Timer_Controller.totalTime = bombTime;
 
     }
 
@@ -89,10 +91,13 @@ public class KeyPadGM : BombGM
 
         else //correct password
         {
-            Debug.Log("Bomb Defused");
             //play bomb defused sound
             //Destroy the bomb
-            DefuseBomb();
+            if(!isDefused)
+            {
+                isDefused = true;
+                DefuseBomb();
+            }
       
         }
     
@@ -102,7 +107,7 @@ public class KeyPadGM : BombGM
 
     void OnDestroy()
     {
-        UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
+        // UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
         if(shakeCoroutine!=null)
         StopCoroutine(shakeCoroutine);
     }

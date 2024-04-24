@@ -5,37 +5,28 @@ using TMPro;
 public class CutBombGM : BombGM
 {   
     public int TapBombTime = 10;
-    private List<string> WireCuttingOrder;
-    private List<int> WireCuttingOrderIndex;
-    private HintLightsControll _hintLightsController;
-    private GameObject Lights;
-    private int HintRemainningTime;
+    private static List<string> WireCuttingOrder;
+    private static List<int> WireCuttingOrderIndex;
+    public static HintLightsControll _hintLightsController;
+    private static int HintRemainningTime;
     void Start()
     {
-        UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
-        UI_Timer.TimerUpdated += (int time) => HandleTimerUpdate(time);
-        if(currentBombInstance != null)
-        _hintLightsController = currentBombInstance.GetComponentInChildren<HintLightsControll>();
+        // UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
+        // UI_Timer.TimerUpdated += (int time) => HandleTimerUpdate(time);
+
     }
     //reset parameters when setactive 
-    void OnEnable()
-    {
 
-    }
-
-    void onDisable()
-    {
-        _hintLightsController = null;
-    }
     override public void StartGame()
     {
-
-
-        generateWireCuttingOrder();
+        HintRemainningTime = 4;
+        WireCuttingOrder = new List<string> { "Wire Red", "Wire Blue", "Wire Green", "Wire Yellow"};
+        WireCuttingOrderIndex = new List<int>{0,1,2,3};
+        GenerateWireCuttingOrder();
         bombTime = TapBombTime;
         SpawnBomb();
         _hintLightsController = currentBombInstance.GetComponentInChildren<HintLightsControll>();
-        HintRemainningTime = 4;
+
 
     }
     private void LightOff(TapWire Wire){
@@ -45,10 +36,9 @@ public class CutBombGM : BombGM
         Destroy(Wire);
     }
 
-    private void generateWireCuttingOrder()
+    private void GenerateWireCuttingOrder()
     {
-        WireCuttingOrder = new List<string> { "Wire Red", "Wire Blue", "Wire Green", "Wire Yellow"};
-        WireCuttingOrderIndex = new List<int>{0,1,2,3};
+
         for (int i = 0; i < WireCuttingOrder.Count; i++)
         {
             string temp = WireCuttingOrder[i];
@@ -61,6 +51,10 @@ public class CutBombGM : BombGM
 
         }
 
+        // foreach (int index in WireCuttingOrderIndex)
+        // {
+        //     Debug.Log(index);
+        // }
         //another way is to group the two lists together and shuffle them together
     }
 
@@ -80,16 +74,17 @@ public class CutBombGM : BombGM
         }
         else
         {
-            ExplodeBomb("KeyPadBombImage");
+            ExplodeBomb();
         }
     }
 
-    void HandleTimerUpdate(int time)
+    public void HandleTimerUpdate()
     {   
-        Debug.Log("HintRemainningTime: "+HintRemainningTime);
+        int index = 4-HintRemainningTime;   
+        // Debug.Log(WireCuttingOrderIndex[index]);
         if(HintRemainningTime > 0)
         {
-            _hintLightsController.UpdateLight(WireCuttingOrderIndex[4-HintRemainningTime]);
+            _hintLightsController.UpdateLight(WireCuttingOrderIndex[index]);
         }
         if(HintRemainningTime == 0)
         {
@@ -99,11 +94,11 @@ public class CutBombGM : BombGM
        HintRemainningTime--;
 
     }
-    void OnDestroy()
-    {
-        UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
-        UI_Timer.TimerUpdated -= (int time) => HintRemainningTime = time;
-    }
+    // void OnDestroy()
+    // {
+    //     UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
+    //     UI_Timer.TimerUpdated -= (int time) => HintRemainningTime = time;
+    // }
 
 
 }

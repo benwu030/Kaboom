@@ -9,19 +9,14 @@ public class DragBombGM : BombGM
     // Start is called before the first frame update
     void Start()
     {
-         UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
+        //  UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
       override public void StartGame()
     {
-        gameObject.SetActive(true);
-
+        // UI_Timer.TimerEnded += () => ExplodeBomb("KeyPadBombImage");
         bombTime = 20;
         SpawnBomb();
 
@@ -54,8 +49,8 @@ public class DragBombGM : BombGM
     }
 
 
-    void OnDestroy(){
-        UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
-    }
+    // void OnDestroy(){
+    //     UI_Timer.TimerEnded -= () => ExplodeBomb("KeyPadBombImage");
+    // }
 
 }

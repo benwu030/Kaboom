@@ -15,6 +15,8 @@ public class DragController : MonoBehaviour
     private Draggable _lastDraggable;
 
     private DragBombGM dragBombGM;
+
+    public AudioSource wireConnectSound;
     void Start()
     {
         dragBombGM = FindObjectOfType<DragBombGM>();
@@ -70,9 +72,10 @@ public class DragController : MonoBehaviour
         {
             if(collider.gameObject !=_lastDraggable.gameObject){
                 UpdatePosistion(collider.transform.position,startPoint);
+                 wireConnectSound.Play();
                 //check if it connects with the correct wire
                 if(collider.gameObject.transform.parent.name == _lastDraggable.gameObject.transform.parent.name){
-                    UpdateDragStatus(false);
+                    UpdateDragStatus(false);//if connected toggle drag status so it can no longer be dragged
                     dragBombGM.checkWires(_lastDraggable,collider.gameObject.GetComponent<Draggable>(),1);
 
                     return;
@@ -94,6 +97,7 @@ public class DragController : MonoBehaviour
     }
 
     private void Drop(){
+       
         Vector3 startPoint = _lastDraggable.gameObject.transform.parent.position;
         UpdateDragStatus(false);
         UpdatePosistion(_lastDraggable.originalPosition,startPoint);    
