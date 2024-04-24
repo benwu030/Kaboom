@@ -79,7 +79,7 @@ void Update()
     {
         int randomBomb;
         CrossSceneReference.score+=remainingTime *100;
-        if(CrossSceneReference.bombSelected==-1){
+        if(CrossSceneReference.gameMode==0){
             randomBomb = UnityEngine.Random.Range(0, BombGMs.Count);
         }
         else{
