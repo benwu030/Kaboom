@@ -7,9 +7,12 @@
 
 
 ## Build on Xcode (Please use Iphone11 simulator for testing)
-1. Unzip the XcodeBuild folder
-2. Open the "Unity-iPhone.xcodeproj" with Xcode
-3. Select the simulator and click the build button
+1. In Unity, open File->Build Settings...
+2. Select iOS and check development build, make sure you have xcode installed first.
+![螢幕截圖 2024-04-29 下午9 11 41](https://github.com/benwu030/Kaboom/assets/78753601/e14d3196-9cf0-4118-ad93-32676301d67b)
+3. Click build/ build and run.
+4. Open the "Unity-iPhone.xcodeproj" with Xcode
+5. Select the simulator and click the build button
 
 
 ## Common Error when building
